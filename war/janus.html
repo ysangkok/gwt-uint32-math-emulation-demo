@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>x86 32-bit JavaScript Math emulation</title>
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <script type="text/javascript" language="javascript" src="janus/janus.nocache.js"></script>
+	<style>
+	th, span { font-size: 150%; }
+	th.left { padding-right: 1em; } th.top { padding-bottom:1em;  }
+	th,td {vertical-align:middle;}
+	span { font-family:monospace; }
+	td { text-align:right; }
+
+	</style>
+<script type="text/javascript">
+function decimalToHexString(number)
+{
+    if (number < 0)
+    {
+        number = 0xFFFFFFFF + number + 1;
+    }
+
+    return number.toString(16);
+}
+
+var init = function() {
+
+var jmulss = function(a,b) { return parseInt(a)*parseInt(b); }
+var jdivss = function(a,b) { return parseInt(a)/parseInt(b); }
+var jmodss = function(a,b) { return parseInt(a)%parseInt(b); }
+var jaddss = function(a,b) { return parseInt(a)+parseInt(b); }
+var jsubss = function(a,b) { return parseInt(a)-parseInt(b); }
+
+window.updateAll = function() {
+var obje = {mul: [jmulss,mulss], div: [jdivss,divss], mod:[jmodss,modss], add:[jaddss,addss], sub:[jsubss,subss]};
+for (var i in obje) {
+var fun = obje[i];
+var javascript = fun[0](document.getElementById('num1').value,document.getElementById('num2').value);
+document.getElementById('j' + i + 'ss').innerHTML = javascript + " " + javascript.toString(16);
+var emulation = fun[1](document.getElementById('num1').value,document.getElementById('num2').value);
+document.getElementById( '' + i + 'ss').innerHTML = emulation + " " + decimalToHexString(parseInt(emulation));
+}
+}
+updateAll();
+}
+</script>
+  </head>
+
+  <body onload="javascript:init();">
+    <h1>x86 32-bit JavaScript Math emulation</h1>
+
+	<div><input onkeyup="javascript:updateAll();" id="num1" value="2222758749"></div>
+	<div><input onkeyup="javascript:updateAll();" id="num2" value="1419063521"></div>
+<table>
+<tr><td><th class=top>javascript<th class=top>emulation
+<tr><th class=left>mul<td><span id="jmulss"></span><td><span id="mulss"></span>
+<tr><th class=left>div<td><span id="jdivss"></span><td><span id="divss"></span>
+<tr><th class=left>mod<td><span id="jmodss"></span><td><span id="modss"></span>
+<tr><th class=left>add<td><span id="jaddss"></span><td><span id="addss"></span>
+<tr><th class=left>sub<td><span id="jsubss"></span><td><span id="subss"></span>
+	
+  </body>
+</html>
