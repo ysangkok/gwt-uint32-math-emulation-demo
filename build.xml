@@ -22,9 +22,40 @@
     <srcfile/>
     <arg line="-o"/>
     <targetfile />
-    <fileset dir="." includes="*.c"/>
+    <fileset dir="." includes="*.standalone.c" />
     <mapper type="glob" from="*.c" to="*.html"/>
   </apply>
+  <apply executable="/home/janus/emscripten/emcc" dest="war">
+    <arg value="-I"/>
+    <arg value="/home/janus/gmp.js"/>
+    <arg value="-s"/>
+    <arg value="INVOKE_RUN=0"/>
+    <arg value="-g"/>
+    <srcfile/>
+    <arg line="-o"/>
+    <targetfile />
+    <fileset dir="." includes="*.includes.c" />
+    <mapper type="glob" from="*.c" to="*.html"/>
+  </apply>
+  <apply executable="/home/janus/emscripten/emcc" dest="war">
+    <arg value="-I"/>
+    <arg value="/home/janus/gmp.js"/>
+    <arg value="-s"/>
+    <arg value="INVOKE_RUN=0"/>
+    <arg value="-g"/>
+    <srcfile/>
+    <arg value="/home/janus/gmp.js/.libs/libgmp.a" />
+    <arg line="-o"/>
+    <targetfile />
+    <fileset dir="." includes="*.links.c" />
+    <mapper type="glob" from="*.c" to="*.html"/>
+  </apply>
+  </target>
+
+  <target name="clean-c">
+  <delete>
+    <fileset dir="war" includes="*.html" excludes="janus.html" />
+  </delete>
   </target>
 
   <target name="libs" description="Copy libs to WEB-INF/lib">
