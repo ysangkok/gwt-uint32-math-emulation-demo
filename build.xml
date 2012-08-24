@@ -14,6 +14,19 @@
     <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
   </path>
 
+  <target name="build-c">
+  <apply executable="/home/janus/emscripten/emcc" dest="war">
+    <arg value="-s"/>
+    <arg value="INVOKE_RUN=0"/>
+    <arg value="-g"/>
+    <srcfile/>
+    <arg line="-o"/>
+    <targetfile />
+    <fileset dir="." includes="*.c"/>
+    <mapper type="glob" from="*.c" to="*.html"/>
+  </apply>
+  </target>
+
   <target name="libs" description="Copy libs to WEB-INF/lib">
     <mkdir dir="war/WEB-INF/lib" />
     <copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />
