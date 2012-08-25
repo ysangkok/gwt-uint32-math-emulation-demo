@@ -35,6 +35,12 @@ public class janus implements EntryPoint {
   }
   private static native void launchEmscripten() /*-{
 	$wnd.msg = $entry(@dk.client.janus::addMsg(Ljava/lang/String;));
-	$wnd.run();
+//	$wnd.run();
+	try {
+		$wnd.parent.integerMathLoaded();
+	} catch (e) {
+		$wnd.console.error(e);
+		throw e;
+	}
   }-*/;
 }

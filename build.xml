@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="janus" default="build" basedir=".">
   <!-- Arguments to gwtc and devmode targets -->
-  <property name="gwt.args" value="-style DETAILED -optimize 9" />
+  <property name="gwt.args" value="-style OBF -optimize 9 -XenableClosureCompiler" />
 
   <!-- Configure path to GWT SDK -->
   <property name="gwt.sdk" location="/home/janus/gwt-2.5.0.rc1" />
+
+  <property name="optlevel" value="-O0" />
+  <property name="invokerun" value="0" />
+  <property name="disableexceptioncatching" value="1" />
 
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>
@@ -16,8 +20,13 @@
 
   <target name="build-c">
   <apply executable="/home/janus/emscripten/emcc" dest="war">
+    <arg value="${optlevel}" />
+    <arg value="--pre-js" />
+    <arg value="arguments.js" />
     <arg value="-s"/>
-    <arg value="INVOKE_RUN=0"/>
+    <arg value="INVOKE_RUN=${invokerun}"/>
+    <arg value="-s"/>
+    <arg value="DISABLE_EXCEPTION_CATCHING=${disableexceptioncatching}"/>
     <arg value="-g"/>
     <srcfile/>
     <arg line="-o"/>
@@ -26,10 +35,15 @@
     <mapper type="glob" from="*.c" to="*.html"/>
   </apply>
   <apply executable="/home/janus/emscripten/emcc" dest="war">
+    <arg value="${optlevel}" />
+    <arg value="--pre-js" />
+    <arg value="arguments.js" />
     <arg value="-I"/>
     <arg value="/home/janus/gmp.js"/>
     <arg value="-s"/>
-    <arg value="INVOKE_RUN=0"/>
+    <arg value="INVOKE_RUN=${invokerun}"/>
+    <arg value="-s"/>
+    <arg value="DISABLE_EXCEPTION_CATCHING=${disableexceptioncatching}"/>
     <arg value="-g"/>
     <srcfile/>
     <arg line="-o"/>
@@ -38,10 +52,15 @@
     <mapper type="glob" from="*.c" to="*.html"/>
   </apply>
   <apply executable="/home/janus/emscripten/emcc" dest="war">
+    <arg value="${optlevel}" />
+    <arg value="--pre-js" />
+    <arg value="arguments.js" />
     <arg value="-I"/>
     <arg value="/home/janus/gmp.js"/>
     <arg value="-s"/>
-    <arg value="INVOKE_RUN=0"/>
+    <arg value="INVOKE_RUN=${invokerun}"/>
+    <arg value="-s"/>
+    <arg value="DISABLE_EXCEPTION_CATCHING=${disableexceptioncatching}"/>
     <arg value="-g"/>
     <srcfile/>
     <arg value="/home/janus/gmp.js/.libs/libgmp.a" />
@@ -50,11 +69,61 @@
     <fileset dir="." includes="*.links.c" />
     <mapper type="glob" from="*.c" to="*.html"/>
   </apply>
+  <apply executable="/home/janus/emscripten/em++" dest="war">
+    <arg value="${optlevel}" />
+    <arg value="--pre-js" />
+    <arg value="arguments.js" />
+    <arg value="-s"/>
+    <arg value="INVOKE_RUN=${invokerun}"/>
+    <arg value="-s"/>
+    <arg value="DISABLE_EXCEPTION_CATCHING=${disableexceptioncatching}"/>
+    <arg value="-g"/>
+    <srcfile/>
+    <arg line="-o"/>
+    <targetfile />
+    <fileset dir="." includes="*.standalone.cc" />
+    <mapper type="glob" from="*.cc" to="*.html"/>
+  </apply>
+  <apply executable="/home/janus/emscripten/em++" dest="war">
+    <arg value="${optlevel}" />
+    <arg value="--pre-js" />
+    <arg value="arguments.js" />
+    <arg value="-I"/>
+    <arg value="/home/janus/gmp.js"/>
+    <arg value="-s"/>
+    <arg value="INVOKE_RUN=${invokerun}"/>
+    <arg value="-s"/>
+    <arg value="DISABLE_EXCEPTION_CATCHING=${disableexceptioncatching}"/>
+    <arg value="-g"/>
+    <srcfile/>
+    <arg line="-o"/>
+    <targetfile />
+    <fileset dir="." includes="*.includes.cc" />
+    <mapper type="glob" from="*.cc" to="*.html"/>
+  </apply>
+  <apply executable="/home/janus/emscripten/em++" dest="war">
+    <arg value="${optlevel}" />
+    <arg value="--pre-js" />
+    <arg value="arguments.js" />
+    <arg value="-I"/>
+    <arg value="/home/janus/gmp.js"/>
+    <arg value="-s"/>
+    <arg value="INVOKE_RUN=${invokerun}"/>
+    <arg value="-s"/>
+    <arg value="DISABLE_EXCEPTION_CATCHING=${disableexceptioncatching}"/>
+    <arg value="-g"/>
+    <srcfile/>
+    <arg value="/home/janus/gmp.js/.libs/libgmp.a" />
+    <arg line="-o"/>
+    <targetfile />
+    <fileset dir="." includes="*.links.cc" />
+    <mapper type="glob" from="*.cc" to="*.html"/>
+  </apply>
   </target>
 
   <target name="clean-c">
   <delete>
-    <fileset dir="war" includes="*.html" excludes="janus.html" />
+    <fileset dir="war" includes="*.html" excludes="janus*.html" />
     <fileset dir="war" includes="*.js" />
   </delete>
   </target>
