@@ -55,6 +55,7 @@
   <target name="clean-c">
   <delete>
     <fileset dir="war" includes="*.html" excludes="janus.html" />
+    <fileset dir="war" includes="*.js" />
   </delete>
   </target>
 

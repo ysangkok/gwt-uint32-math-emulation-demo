@@ -18,17 +18,13 @@ public class janus implements EntryPoint {
     ta.setWidth("100%");
     ta.setHeight("100%");
 
-final VerticalPanel vp = new VerticalPanel();
-vp.add(ta); vp.setWidth("100%");
-vp.setHeight((int) (((float) Window.getClientHeight())*0.9) + "px");
-Window.addResizeHandler(new ResizeHandler() {
+    DockLayoutPanel vp = new DockLayoutPanel(Style.Unit.EM);
+    ta.setWidth("100%");
+    ta.setHeight("100%");
+    vp.add(ta);
 
- public void onResize(ResizeEvent event) {
-   int height = (int) (((float) event.getHeight())*0.9);
-   vp.setHeight(height + "px");
- }
-});
-RootPanel.get().add(vp);
+    RootLayoutPanel rp = RootLayoutPanel.get();
+    rp.add(vp);
 
     IntegerMath.exportStaticMethod();
     launchEmscripten();

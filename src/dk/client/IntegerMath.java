@@ -37,7 +37,7 @@ public class IntegerMath {
 		return (int) ((d1*q) & 0xffffffff);
 	}
 	public static int div(Long d1, Long q) {
-		return (int) ((d1*q) & 0xffffffff);
+		return (int) ((d1/q) & 0xffffffff);
 	}
 	public static int mod(Long d1, Long q) {
 		return (int) ((d1%q) & 0xffffffff);
