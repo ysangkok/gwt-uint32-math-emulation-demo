@@ -32,9 +32,10 @@ var jdivss = function(a,b) { return parseInt(a)/parseInt(b); }
 var jmodss = function(a,b) { return parseInt(a)%parseInt(b); }
 var jaddss = function(a,b) { return parseInt(a)+parseInt(b); }
 var jsubss = function(a,b) { return parseInt(a)-parseInt(b); }
+var jxorss = function(a,b) { return parseInt(a)^parseInt(b); }
 
 window.updateAll = function() {
-var obje = {mul: [jmulss,mulss], div: [jdivss,divss], mod:[jmodss,modss], add:[jaddss,addss], sub:[jsubss,subss]};
+var obje = {mul: [jmulss,mulss], div: [jdivss,divss], mod:[jmodss,modss], add:[jaddss,addss], sub:[jsubss,subss], xor: [jxorss, xorss]};
 for (var i in obje) {
 var fun = obje[i];
 var javascript = fun[0](document.getElementById('num1').value,document.getElementById('num2').value);
@@ -60,6 +61,7 @@ updateAll();
 <tr><th class=left>mod<td><span id="jmodss"></span><td><span id="modss"></span>
 <tr><th class=left>add<td><span id="jaddss"></span><td><span id="addss"></span>
 <tr><th class=left>sub<td><span id="jsubss"></span><td><span id="subss"></span>
+<tr><th class=left>xor<td><span id="jxorss"></span><td><span id="xorss"></span>
 	
   </body>
 </html>
